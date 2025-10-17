@@ -1,0 +1,5 @@
+cdsapi>=0.7.4
+rich
+dotenv
+PyYAML
+jsonargparse
