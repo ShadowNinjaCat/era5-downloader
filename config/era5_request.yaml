@@ -1,0 +1,11 @@
+save_folder:
+dataset:
+request:
+  product_type:
+  format:
+  variable: []
+  year: []
+  month: []
+  day: []
+  hour: []
+  area: [] # [North, West, South, East]
