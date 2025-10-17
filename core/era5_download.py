@@ -5,9 +5,9 @@ import time
 import cdsapi
 from cdsapi.api import Result
 
-from utils.logger import Logger
+from core.utils.logger import Logger
 
-def monitor_and_download(enqueued_file: str, poll_interval: int = 60):
+def era5_download(enqueued_file: str, poll_interval: int = 60):
     with open(enqueued_file, 'r') as f:
         enqueued = json.load(f)
     client = cdsapi.Client()
@@ -32,12 +32,6 @@ def monitor_and_download(enqueued_file: str, poll_interval: int = 60):
                     for chunk in response.iter_content(chunk_size=8192):
                         f.write(chunk)
                 continue
-                # expected_size = reply.get('asset', {}).get('value', {}).get('file:size')
-                # if expected_size and os.path.getsize(output_file) == expected_size:
-                #     Logger.info(f"Downloaded {output_file} (size: {expected_size} bytes, verified)")
-                # else:
-                #     Logger.warning(f"Size mismatch for {output_file}")
-                # continue
             except Exception as e:
                 Logger.error(f"Direct download failed for {output_file}: {e}")
                 continue
@@ -69,7 +63,7 @@ def main():
 
     Logger.info("Starting ERA5 download process")
     try:
-        monitor_and_download(args.request_json, args.poll_interval)
+        era5_download(args.request_json, args.poll_interval)
         Logger.info("Download process completed")
     except Exception as e:
         Logger.error(f"Error in download: {e}")
